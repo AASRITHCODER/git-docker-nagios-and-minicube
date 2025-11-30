@@ -1,0 +1,88 @@
+1. Setup
+git --version
+git config --global user.name "Your Name"
+git config --global user.email "you@email.com"
+git config --list
+
+2. Start a Repo
+git init
+git clone <url>
+
+3. Check Status & History
+git status
+git log
+git log --oneline
+git log --graph --oneline --decorate --all
+git show <commit>
+
+4. Add & Commit
+git add <file>
+git add .
+git commit -m "message"
+git commit -am "msg"      # add + commit tracked files
+
+5. Branching
+git branch
+git branch <name>
+git switch <name>
+git switch -c <name>      # create + switch
+# old:
+git checkout <branch>
+git checkout -b <branch>
+
+6. Merge & Rebase
+git merge <branch>
+git rebase <branch>
+git rebase --continue
+git rebase --abort
+
+7. Undo / Fix
+git restore <file>                      # discard changes
+git restore --staged <file>             # unstage
+git reset <commit>                      # move HEAD
+git reset --hard <commit>               # delete changes
+git revert <commit>                     # safe undo
+
+8. Stash (Temporary Save)
+git stash
+git stash list
+git stash apply
+git stash pop
+
+9. Remotes
+git remote -v
+git remote add origin <url>
+git remote remove origin
+
+10. Push & Pull
+git push origin <branch>
+git push -u origin <branch>
+git pull
+git pull origin <branch>
+
+11. Tags
+git tag
+git tag <name>
+git push origin <name>
+
+12. Clean
+git clean -n          # preview delete
+git clean -f          # delete untracked files
+
+13. Useful Tools
+git diff
+git diff --staged
+git blame <file>
+git shortlog -sn      # commits by each author
+git reflog            # view everything (even deleted commits)
+
+14. Fix Common Problems
+git merge --abort
+git rebase --abort
+git reset HEAD~1       # undo last commit
+git push -f            # force push (careful)
+
+15. .gitignore Example
+node_modules/
+.env
+*.log
