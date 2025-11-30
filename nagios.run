@@ -1,0 +1,27 @@
+1. Pull the Nagios Docker Image
+docker pull jasonrivers/nagios:latest
+
+2. Run the Nagios Container (Port 8888 → 80)
+docker run --name nagiosdemo -p 8888:80 jasonrivers/nagios:latest
+
+3. Access Nagios Dashboard (copy and paste into browser)
+http://localhost:8888
+
+
+Login:
+
+Username: nagiosadmin
+
+Password: nagios
+
+4. Stop the Running Container
+docker stop nagiosdemo
+
+5. Remove the Container
+docker rm nagiosdemo
+
+6. View Images
+docker images
+
+7. Remove the Nagios Image (optional)
+docker rmi jasonrivers/nagios:latest
