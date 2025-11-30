@@ -1,0 +1,111 @@
+🎯 NAGIOS CHEAT SHEET — Quick & Complete
+✅ 1. Nagios Service Commands
+systemctl start nagios
+systemctl stop nagios
+systemctl restart nagios
+systemctl status nagios
+systemctl reload nagios
+
+✅ 2. Verify Nagios Configurations
+
+Always check config before restart:
+
+nagios -v /usr/local/nagios/etc/nagios.cfg
+
+
+Errors will be displayed → fix them before proceeding.
+
+✅ 3. Important Nagios Directories
+/usr/local/nagios/                 # Nagios installation
+/usr/local/nagios/etc/             # Main config files
+/usr/local/nagios/etc/objects/     # Hosts, services, contacts, commands
+/usr/local/nagios/var/             # Logs, status
+/lib/nagios/plugins/               # Default plugins
+
+✅ 4. Key Configuration Files
+nagios.cfg                 # main Nagios config
+objects/commands.cfg       # command definitions
+objects/contacts.cfg       # contacts + groups
+objects/hosts.cfg          # host definitions
+objects/services.cfg       # service checks
+objects/timeperiods.cfg    # time periods
+cgi.cfg                    # web interface settings
+
+✅ 5. Host Definition Template
+define host {
+    host_name           server1
+    alias               My Server
+    address             192.168.1.10
+    max_check_attempts  5
+    check_period        24x7
+    check_command       check-host-alive
+    notification_period 24x7
+}
+
+✅ 6. Service Definition Template
+define service {
+    host_name           server1
+    service_description CPU Load
+    check_command       check_load!5.0!10.0
+    max_check_attempts  3
+    check_interval      5
+    retry_interval      2
+    notification_period 24x7
+}
+
+✅ 7. Command Definition Example
+define command {
+    command_name    check_load
+    command_line    $USER1$/check_load -w $ARG1$ -c $ARG2$
+}
+
+✅ 8. Most Common Nagios Plugins
+check_ping              # ping host
+check_http              # check website
+check_ssh               # SSH up?
+check_disk              # disk usage
+check_load              # CPU load
+check_procs             # running processes
+check_users             # number of logged-in users
+check_mysql             # MySQL up?
+
+✅ 9. Using Plugins Manually (Testing)
+/usr/lib/nagios/plugins/check_ping -H 8.8.8.8 -w 300,80% -c 400,100%
+/usr/lib/nagios/plugins/check_http -H google.com
+
+✅ 10. Adding a New Host (Steps)
+
+Add host in hosts.cfg
+
+Add services in services.cfg
+
+Check config:
+
+nagios -v /usr/local/nagios/etc/nagios.cfg
+
+
+Restart Nagios:
+
+systemctl restart nagios
+
+✅ 11. Notifications
+define contact {
+    contact_name   admin
+    email          admin@example.com
+    service_notification_period 24x7
+}
+
+✅ 12. Sched Downtime
+# Web UI → Schedule downtime
+# Or write in downtime.cfg:
+define downtime {
+    host_name       server1
+    start_time      2025-11-30 14:00
+    end_time        2025-11-30 15:00
+    author          admin
+    comment         Maintenance
+}
+
+✅ 13. Check Status Files
+/usr/local/nagios/var/status.dat
+/usr/local/nagios/var/nagios.log
